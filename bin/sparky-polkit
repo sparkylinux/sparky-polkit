@@ -1,0 +1,59 @@
+#! /bin/bash
+
+# The script starts gnome-policykit or lxpolkit in window managers
+# installed via APTus Desktop, Minimal ISO and so.
+# Supported desktops: awesome, bspwm, enlightenment, fluxbox, i3,
+# icewm, jwm, openbox, pekwm, twin (trinity), window maker.
+# Copyright Paweł Pijanowski 2017 under GNU GPL 3
+# Last update 2017/01/28 
+
+CHECKGNOMEPOLICYKIT="`pidof polkit-gnome-authentication-agent-1`"
+CHECKLXPOLKIT="`pidof lxpolkit`"
+CHECKLXQTPOLICYKIT="`pidof lxqt-policykit-agent`"
+
+if [ "$CHECKGNOMEPOLICYKIT" != "" ] || [ "$CHECKLXPOLKIT" != "" ] || [ "$CHECKLXQTPOLICYKIT" != "" ]; then
+	exit 1
+fi
+
+if [ -f /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 ]; then
+	SPARKYPOLKIT="/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1"
+elif [ -f /usr/lib/polkit-gnome-authentication-agent-1 ]; then
+	SPARKYPOLKIT="/usr/lib/polkit-gnome-authentication-agent-1"
+elif [ -f /usr/bin/lxpolkit ]; then
+	SPARKYPOLKIT="/usr/bin/lxpolkit"
+else
+	echo "You have to install policykit-1-gnome or lxpolkit package"
+	exit 1
+fi
+
+if [ $(pidof awesome) ]; then
+	POLKITTEST="1"
+elif [ $(pidof bspwm) ]; then
+	POLKITTEST="1"
+elif [ $(pidof enlightenment) ]; then
+	POLKITTEST="1"
+elif [ $(pidof fluxbox) ]; then
+	POLKITTEST="1"
+elif [ $(pidof i3) ]; then
+	POLKITTEST="1"
+elif [ $(pidof icewm) ]; then
+	POLKITTEST="1"
+elif [ $(pidof jwm) ]; then
+	POLKITTEST="1"
+elif [ $(pidof openbox) ]; then
+	POLKITTEST="1"
+elif [ $(pidof pekwm) ]; then
+	POLKITTEST="1"
+elif [ $(pidof twin) ]; then
+	POLKITTEST="1"
+elif [ $(pidof wmaker) ]; then
+	POLKITTEST="1"
+fi
+
+if [ "$POLKITTEST" = "1" ]; then
+	$SPARKYPOLKIT &
+else
+	exit 0
+fi
+
+exit 0
