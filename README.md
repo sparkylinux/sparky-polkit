@@ -2,7 +2,7 @@ Sparky Polkit
 The script starts gnome-polkit or lxpolkit in window managers
 installed via APTus Desktop, Minimal ISO and so.
 Supported desktops: awesome, bspwm, enlightenment, fluxbox, i3,
-icewm, jwm, openbox, pekwm, twin (trinity), window maker.
+icewm, jwm, manokwari, openbox, pekwm, twin (trinity), window maker.
 
 Copyright (C) 2017 Paweł Pijanowski
 

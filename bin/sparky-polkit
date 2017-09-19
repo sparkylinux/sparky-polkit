@@ -3,9 +3,9 @@
 # The script starts gnome-policykit or lxpolkit in window managers
 # installed via APTus Desktop, Minimal ISO and so.
 # Supported desktops: awesome, bspwm, enlightenment, fluxbox, i3,
-# icewm, jwm, openbox, pekwm, twin (trinity), window maker.
+# icewm, jwm, manokwari, openbox, pekwm, twin (trinity), window maker.
 # Copyright Paweł Pijanowski 2017 under GNU GPL 3
-# Last update 2017/01/28 
+# Last update 2017/09/17 
 
 CHECKGNOMEPOLICYKIT="`pidof polkit-gnome-authentication-agent-1`"
 CHECKLXPOLKIT="`pidof lxpolkit`"
@@ -39,6 +39,8 @@ elif [ $(pidof i3) ]; then
 elif [ $(pidof icewm) ]; then
 	POLKITTEST="1"
 elif [ $(pidof jwm) ]; then
+	POLKITTEST="1"
+elif [ $(pidof manokwari) ]; then
 	POLKITTEST="1"
 elif [ $(pidof openbox) ]; then
 	POLKITTEST="1"
