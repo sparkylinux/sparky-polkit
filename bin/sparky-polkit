@@ -4,8 +4,8 @@
 # installed via APTus Desktop, Minimal ISO and so.
 # Supported desktops: awesome, bspwm, enlightenment, fluxbox, i3,
 # icewm, jwm, manokwari, openbox, pekwm, twin (trinity), window maker.
-# Copyright Paweł Pijanowski 2017 under GNU GPL 3
-# Last update 2017/09/17 
+# Copyright Paweł Pijanowski 2017-2018 under GNU GPL 3
+# Last update 2018/03/07 
 
 CHECKGNOMEPOLICYKIT="`pidof polkit-gnome-authentication-agent-1`"
 CHECKLXPOLKIT="`pidof lxpolkit`"
@@ -49,6 +49,8 @@ elif [ $(pidof pekwm) ]; then
 elif [ $(pidof twin) ]; then
 	POLKITTEST="1"
 elif [ $(pidof wmaker) ]; then
+	POLKITTEST="1"
+elif [ $(pidof x-window-manager) ]; then
 	POLKITTEST="1"
 fi
 

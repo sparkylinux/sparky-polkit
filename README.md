@@ -4,7 +4,7 @@ installed via APTus Desktop, Minimal ISO and so.
 Supported desktops: awesome, bspwm, enlightenment, fluxbox, i3,
 icewm, jwm, manokwari, openbox, pekwm, twin (trinity), window maker.
 
-Copyright (C) 2017 Paweł Pijanowski
+Copyright (C) 2017-2018 Paweł Pijanowski
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 Dependencies:
 -------------
 coreutils
-policykit-1-gnome or lxpolkit
+policykit-1-gnome | lxpolkit
 sysvinit-utils
 
 Install:
