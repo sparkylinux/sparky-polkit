@@ -21,9 +21,6 @@ else
 	if [ ! -d  /etc/xdg/autostart ]; then
 		mkdir -p /etc/xdg/autostart
 	fi
-	cp etc/sparky-polkit.desktop /etc/xdg/autostart/sparky-polkit.desktop
-	if [ ! -d  /usr/bin ]; then
-		mkdir -p /usr/bin
-	fi
-	cp bin/sparky-polkit /usr/bin/sparky-polkit
+	cp etc/* /etc/xdg/autostart/
+	cp bin/* /usr/bin/
 fi

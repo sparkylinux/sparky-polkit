@@ -2,62 +2,80 @@
 
 # The script starts gnome-policykit or lxpolkit in window managers
 # installed via APTus Desktop, Minimal ISO and so.
-# Supported desktops: awesome, bspwm, enlightenment, fluxbox, i3,
-# icewm, jwm, manokwari, openbox, pekwm, twin (trinity), window maker.
 # Copyright Paweł Pijanowski 2017-2018 under GNU GPL 3
-# Last update 2018/03/07 
+# Last update 2018/03/18 
 
-CHECKGNOMEPOLICYKIT="`pidof polkit-gnome-authentication-agent-1`"
-CHECKLXPOLKIT="`pidof lxpolkit`"
-CHECKLXQTPOLICYKIT="`pidof lxqt-policykit-agent`"
+BUDGIEPOLKIT="`pidof budgie-polkit-dialog`"
+GNOMEPOLKIT="`pidof polkit-gnome-authentication-agent-1`"
+KDEPOLKIT="`pidof polkit-kde-authentication-agent-1`"
+LXDEPOLKIT="`pidof lxpolkit`"
+LXQTPOLKIT="`pidof lxqt-policykit-agent`"
+MATEPOLKIT="`pidof polkit-mate-authentication-agent-1`"
+PANTHEONPOLKIT="`pidof pantheon-agent-polkit`"
 
-if [ "$CHECKGNOMEPOLICYKIT" != "" ] || [ "$CHECKLXPOLKIT" != "" ] || [ "$CHECKLXQTPOLICYKIT" != "" ]; then
-	exit 1
-fi
+CHECKLUMINA="`pidof lumina desktop`"
+CHECKLXDE="`pidof lxsession`"
+CHECKGNOMEFLASH="`pidof gnome-flashback`"
+CHECKGNOMESHELL="`pidof gnome-shell`"
 
 if [ -f /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 ]; then
-	SPARKYPOLKIT="/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1"
-elif [ -f /usr/lib/polkit-gnome-authentication-agent-1 ]; then
-	SPARKYPOLKIT="/usr/lib/polkit-gnome-authentication-agent-1"
-elif [ -f /usr/bin/lxpolkit ]; then
-	SPARKYPOLKIT="/usr/bin/lxpolkit"
-else
-	echo "You have to install policykit-1-gnome or lxpolkit package"
+	CHECKGNOMEPOLKIT="/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1"
+fi
+CHECKLXDEPOLKIT="`which lxpolkit`"
+
+if [ "$CHECKGNOMEPOLKIT" = "" ] && [ "$CHCECKLXDEPOLKIT" = "" ]; then
+	echo "Error: You have to install policykit-1-gnome or lxpolkit package"
 	exit 1
+elif [ "$CHECKGNOMEPOLKIT" != "" ]; then
+	SPARKYPOLKIT="$CHECKGNOMEPOLKIT"
+elif [ "$CHECKLXDEPOLKIT" != "" ]; then
+	SPARKYPOLKIT="$CHECKLXDEPOLKIT"
 fi
 
-if [ $(pidof awesome) ]; then
-	POLKITTEST="1"
-elif [ $(pidof bspwm) ]; then
-	POLKITTEST="1"
-elif [ $(pidof enlightenment) ]; then
-	POLKITTEST="1"
-elif [ $(pidof fluxbox) ]; then
-	POLKITTEST="1"
-elif [ $(pidof i3) ]; then
-	POLKITTEST="1"
-elif [ $(pidof icewm) ]; then
-	POLKITTEST="1"
-elif [ $(pidof jwm) ]; then
-	POLKITTEST="1"
-elif [ $(pidof manokwari) ]; then
-	POLKITTEST="1"
-elif [ $(pidof openbox) ]; then
-	POLKITTEST="1"
-elif [ $(pidof pekwm) ]; then
-	POLKITTEST="1"
-elif [ $(pidof twin) ]; then
-	POLKITTEST="1"
-elif [ $(pidof wmaker) ]; then
-	POLKITTEST="1"
-elif [ $(pidof x-window-manager) ]; then
-	POLKITTEST="1"
-fi
-
-if [ "$POLKITTEST" = "1" ]; then
-	$SPARKYPOLKIT &
+# budgie
+if [ "$BUDGIEPOLKIT" != "" ]; then
+	exit 1
+#gnome
+elif [ "$CHECKGNOMEFLASH" != "" ] || [ "$CHECKGNOMESHELL" != "" ]; then
+	exit 1
+# kde
+elif [ "$KDEPOLKIT" != "" ]; then
+	exit 1
+# lumina
+elif [ "$CHECKLUMINA" != "" ]; then
+	if [ "$GNOMEPOLKIT" != "" ]; then
+		killall -9 polkit-gnome-authentication-agent-1
+	fi
+	if [ "$LXDEPOLKIT" != "" ]; then
+		exit 1
+	else
+		$CHECKLXDEPOLKIT &
+	fi
+# lxde
+elif [ "$CHECKLXDE" != "" ]; then
+	if [ "$GNOMEPOLKIT" != "" ]; then
+		killall -9 polkit-gnome-authentication-agent-1
+	fi
+	if [ "$LXDEPOLKIT" != "" ]; then
+		exit 1
+	else
+		$CHECKLXDEPOLKIT &
+	fi
+# lxqt
+elif [ "$LXQTPOLKIT" != "" ]; then
+	exit 1
+# mate
+elif [ "$MATEPOLKIT" != "" ]; then
+	exit 1
+# pantheon
+elif [ "$PANTHEONPOLKIT" != "" ]; then
+	exit 1
+# others
 else
-	exit 0
+	if [ "$GNOMEPOLKIT" = "" ] && [ "$LXDEPOLKIT" = "" ]; then
+		$SPARKYPOLKIT &
+		exit 0
+	fi
 fi
 
 exit 0
