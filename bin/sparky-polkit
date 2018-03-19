@@ -1,9 +1,9 @@
 #! /bin/bash
 
-# The script starts gnome-policykit or lxpolkit in window managers
+# The script starts lxpolkit or gnome-policykit in window managers
 # installed via APTus Desktop, Minimal ISO and so.
 # Copyright Paweł Pijanowski 2017-2018 under GNU GPL 3
-# Last update 2018/03/18 
+# Last update 2018/03/19
 
 BUDGIEPOLKIT="`pidof budgie-polkit-dialog`"
 GNOMEPOLKIT="`pidof polkit-gnome-authentication-agent-1`"
@@ -23,13 +23,13 @@ if [ -f /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 ]; then
 fi
 CHECKLXDEPOLKIT="`which lxpolkit`"
 
-if [ "$CHECKGNOMEPOLKIT" = "" ] && [ "$CHCECKLXDEPOLKIT" = "" ]; then
-	echo "Error: You have to install policykit-1-gnome or lxpolkit package"
+if [ "$CHECKGNOMEPOLKIT" = "" ] && [ "$CHECKLXDEPOLKIT" = "" ]; then
+	echo "Error: You have to install lxpolkit or policykit-1-gnome package"
 	exit 1
-elif [ "$CHECKGNOMEPOLKIT" != "" ]; then
-	SPARKYPOLKIT="$CHECKGNOMEPOLKIT"
 elif [ "$CHECKLXDEPOLKIT" != "" ]; then
 	SPARKYPOLKIT="$CHECKLXDEPOLKIT"
+elif [ "$CHECKGNOMEPOLKIT" != "" ]; then
+	SPARKYPOLKIT="$CHECKGNOMEPOLKIT"
 fi
 
 # budgie

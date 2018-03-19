@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 Dependencies:
 -------------
 coreutils
-policykit-1-gnome | lxpolkit
+lxpolkit | policykit-1-gnome
 sysvinit-utils
 
 Install:
