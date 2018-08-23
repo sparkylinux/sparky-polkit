@@ -3,7 +3,7 @@
 # The script starts lxpolkit or gnome-policykit in window managers
 # installed via APTus Desktop, Minimal ISO and so.
 # Copyright Paweł Pijanowski 2017-2018 under GNU GPL 3
-# Last update 2018/03/19
+# Last update 2018/08/20
 
 BUDGIEPOLKIT="`pidof budgie-polkit-dialog`"
 GNOMEPOLKIT="`pidof polkit-gnome-authentication-agent-1`"
@@ -11,7 +11,8 @@ KDEPOLKIT="`pidof polkit-kde-authentication-agent-1`"
 LXDEPOLKIT="`pidof lxpolkit`"
 LXQTPOLKIT="`pidof lxqt-policykit-agent`"
 MATEPOLKIT="`pidof polkit-mate-authentication-agent-1`"
-PANTHEONPOLKIT="`pidof pantheon-agent-polkit`"
+PANTHEONPOLKITOLD="`pidof pantheon-agent-polkit`"
+PANTHEONPOLKITNEW="`pidof io.elementary.pantheon-agent-polkit`"
 
 CHECKLUMINA="`pidof lumina desktop`"
 CHECKLXDE="`pidof lxsession`"
@@ -68,7 +69,7 @@ elif [ "$LXQTPOLKIT" != "" ]; then
 elif [ "$MATEPOLKIT" != "" ]; then
 	exit 1
 # pantheon
-elif [ "$PANTHEONPOLKIT" != "" ]; then
+elif [ "$PANTHEONPOLKITOLD" != "" ] || [ "$PANTHEONPOLKITNEW" != "" ]; then
 	exit 1
 # others
 else
