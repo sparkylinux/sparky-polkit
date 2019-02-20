@@ -3,7 +3,7 @@
 # The script starts lxpolkit or gnome-policykit in window managers
 # installed via APTus Desktop, Minimal ISO and so.
 # Copyright Paweł Pijanowski 2017-2018 under GNU GPL 3
-# Last update 2018/08/20
+# Last update 2019/02/20
 
 BUDGIEPOLKIT="`pidof budgie-polkit-dialog`"
 GNOMEPOLKIT="`pidof polkit-gnome-authentication-agent-1`"
@@ -21,59 +21,75 @@ CHECKGNOMESHELL="`pidof gnome-shell`"
 
 if [ -f /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 ]; then
 	CHECKGNOMEPOLKIT="/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1"
+else
+	CHECKGNOMEPOLKIT=""
 fi
 CHECKLXDEPOLKIT="`which lxpolkit`"
 
 if [ "$CHECKGNOMEPOLKIT" = "" ] && [ "$CHECKLXDEPOLKIT" = "" ]; then
-	echo "Error: You have to install lxpolkit or policykit-1-gnome package"
+	echo "Error: You have to install lxpolkit or policykit-1-gnome package, exiting..."
 	exit 1
 elif [ "$CHECKLXDEPOLKIT" != "" ]; then
+	echo "lxde polkit is installed"
 	SPARKYPOLKIT="$CHECKLXDEPOLKIT"
 elif [ "$CHECKGNOMEPOLKIT" != "" ]; then
+	echo "gnome polkit is installed"
 	SPARKYPOLKIT="$CHECKGNOMEPOLKIT"
 fi
 
 # budgie
 if [ "$BUDGIEPOLKIT" != "" ]; then
+	echo "budgie polkit is running, exiting..."
 	exit 1
 #gnome
-elif [ "$CHECKGNOMEFLASH" != "" ] || [ "$CHECKGNOMESHELL" != "" ]; then
+elif [ "$CHECKGNOMEFLASH" != "" ]; then
+	echo "gnome polkit is running, exiting..."
+	exit 1
+elif [ "$CHECKGNOMESHELL" != "" ]; then
+	echo "gnome polkit is running, exiting..."
 	exit 1
 # kde
 elif [ "$KDEPOLKIT" != "" ]; then
+	echo "kde polkit is running, exiting..."
 	exit 1
 # lumina
 elif [ "$CHECKLUMINA" != "" ]; then
-	if [ "$GNOMEPOLKIT" != "" ]; then
-		killall -9 polkit-gnome-authentication-agent-1
-	fi
+	#if [ "$GNOMEPOLKIT" != "" ]; then
+	#	echo "gnome polkit is running on lumina, killing it..."
+	#	killall -9 polkit-gnome-authentication-agent-1
+	#fi
 	if [ "$LXDEPOLKIT" != "" ]; then
+		echo "lxde polkit is running on lumina, exiting..."
 		exit 1
 	else
+		echo "lxde polkit is not running on lumina, launching it..."
 		$CHECKLXDEPOLKIT &
 	fi
 # lxde
 elif [ "$CHECKLXDE" != "" ]; then
-	if [ "$GNOMEPOLKIT" != "" ]; then
-		killall -9 polkit-gnome-authentication-agent-1
-	fi
 	if [ "$LXDEPOLKIT" != "" ]; then
+		echo "lxde polkit is running on lxde, exiting..."
 		exit 1
-	else
-		$CHECKLXDEPOLKIT &
 	fi
 # lxqt
 elif [ "$LXQTPOLKIT" != "" ]; then
+	echo "lxqt polkit is running, exiting..."
 	exit 1
 # mate
 elif [ "$MATEPOLKIT" != "" ]; then
+	echo "mate polkit is running, exiting..."
 	exit 1
 # pantheon
-elif [ "$PANTHEONPOLKITOLD" != "" ] || [ "$PANTHEONPOLKITNEW" != "" ]; then
+elif [ "$PANTHEONPOLKITOLD" != "" ]; then
+	echo "old pantheon polkit is running, exiting..."
+	exit 1
+elif [ "$PANTHEONPOLKITNEW" != "" ]; then
+	echo "new pantheon polkit is running, exiting..."
 	exit 1
 # others
 else
-	if [ "$GNOMEPOLKIT" = "" ] && [ "$LXDEPOLKIT" = "" ]; then
+	if [ "$LXDEPOLKIT" = "" ] && [ "$GNOMEPOLKIT" = "" ]; then
+		echo "no polkit is running, launching sparky polkit via lxde or gnome polkit..."
 		$SPARKYPOLKIT &
 		exit 0
 	fi
