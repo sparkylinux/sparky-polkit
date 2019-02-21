@@ -15,7 +15,7 @@ PANTHEONPOLKITOLD="`pidof pantheon-agent-polkit`"
 PANTHEONPOLKITNEW="`pidof io.elementary.pantheon-agent-polkit`"
 UKUIPOLKIT="`pidof polkit-ukui-authentication-agent-1`"
 
-CHECKLUMINA="`pidof lumina desktop`"
+CHECKLUMINA="`pidof lumina-desktop`"
 CHECKLXDE="`pidof lxsession`"
 CHECKGNOMEFLASH="`pidof gnome-flashback`"
 CHECKGNOMESHELL="`pidof gnome-shell`"
