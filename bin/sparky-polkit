@@ -2,8 +2,8 @@
 
 # The script starts lxpolkit or gnome-policykit in window managers
 # installed via APTus Desktop, Minimal ISO and so.
-# Copyright Paweł Pijanowski 2017-2018 under GNU GPL 3
-# Last update 2019/02/20
+# Copyright Paweł Pijanowski 2017-2019 under GNU GPL 3
+# Last update 2019/02/21
 
 BUDGIEPOLKIT="`pidof budgie-polkit-dialog`"
 GNOMEPOLKIT="`pidof polkit-gnome-authentication-agent-1`"
@@ -13,6 +13,7 @@ LXQTPOLKIT="`pidof lxqt-policykit-agent`"
 MATEPOLKIT="`pidof polkit-mate-authentication-agent-1`"
 PANTHEONPOLKITOLD="`pidof pantheon-agent-polkit`"
 PANTHEONPOLKITNEW="`pidof io.elementary.pantheon-agent-polkit`"
+UKUIPOLKIT="`pidof polkit-ukui-authentication-agent-1`"
 
 CHECKLUMINA="`pidof lumina desktop`"
 CHECKLXDE="`pidof lxsession`"
@@ -41,7 +42,7 @@ fi
 if [ "$BUDGIEPOLKIT" != "" ]; then
 	echo "budgie polkit is running, exiting..."
 	exit 1
-#gnome
+# gnome
 elif [ "$CHECKGNOMEFLASH" != "" ]; then
 	echo "gnome polkit is running, exiting..."
 	exit 1
@@ -86,10 +87,20 @@ elif [ "$PANTHEONPOLKITOLD" != "" ]; then
 elif [ "$PANTHEONPOLKITNEW" != "" ]; then
 	echo "new pantheon polkit is running, exiting..."
 	exit 1
+# ukui
+elif [ "$UKUIPOLKIT" != "" ]; then
+	echo "ukui polkit is running, exiting..."
+	exit 1
 # others
 else
-	if [ "$LXDEPOLKIT" = "" ] && [ "$GNOMEPOLKIT" = "" ]; then
-		echo "no polkit is running, launching sparky polkit via lxde or gnome polkit..."
+	if [ "$LXDEPOLKIT" != "" ]; then
+		echo "lxde polkit is running, exiting..."
+		exit 1
+	elif [ "$GNOMEPOLKIT" != "" ]; then
+		echo "gnome polkit is running, exiting..."
+		exit 1
+	else
+		echo "no polkit is running, launching lxde or gnome polkit via sparky-polkit..."
 		$SPARKYPOLKIT &
 		exit 0
 	fi
