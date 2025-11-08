@@ -4,7 +4,7 @@ installed via APTus Desktop, Minimal ISO and so.
 Supported desktops: awesome, bspwm, enlightenment, fluxbox, i3,
 icewm, jwm, manokwari, openbox, pekwm, twin (trinity), window maker.
 
-Copyright (C) 2017-2019 Paweł Pijanowski
+Copyright (C) 2017-2025 Paweł Pijanowski
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

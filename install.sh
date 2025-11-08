@@ -15,12 +15,12 @@
 #  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
 
 if [ "$1" = "uninstall" ]; then
-   	rm -f /etc/xdg/autostart/sparky-polkit.desktop
+   	#rm -f /etc/xdg/autostart/sparky-polkit.desktop
 	rm -f /usr/bin/sparky-polkit
 else
-	if [ ! -d  /etc/xdg/autostart ]; then
-		mkdir -p /etc/xdg/autostart
-	fi
-	cp etc/* /etc/xdg/autostart/
+	#if [ ! -d  /etc/xdg/autostart ]; then
+	#	mkdir -p /etc/xdg/autostart
+	#fi
+	#cp etc/* /etc/xdg/autostart/
 	cp bin/* /usr/bin/
 fi
